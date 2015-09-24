@@ -2,7 +2,7 @@
 
 # Links the personnal folder with the shared folder
 rm -rf /home/vagrant/projects
-ln -fs /vagrant /home/vagrant/projects
+ln -fs /data /home/vagrant/projects
 
 # Update the system
 locale-gen fr_FR.UTF-8
