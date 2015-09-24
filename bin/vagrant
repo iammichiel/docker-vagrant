@@ -15,4 +15,7 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 curl -sSL https://get.docker.io/ubuntu/ | sudo sh
 usermod -a -G docker vagrant
 
+curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
 service docker restart
