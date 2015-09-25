@@ -24,8 +24,14 @@ apt-get update && apt-get install -y \
   nodejs \
   npm
 
+# Nodejs does not create the node executable.
+update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
+
 # Installing composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Installing bower
+npm install -g bower grunt-cli
 
 # Install Docker
 curl -sSL https://get.docker.io/ubuntu/ | sudo sh
