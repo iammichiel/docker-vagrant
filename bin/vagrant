@@ -22,7 +22,8 @@ apt-get update && apt-get install -y \
   zsh \
   curl \
   nodejs \
-  npm
+  npm \
+  python-dev
 
 # Nodejs does not create the node executable.
 update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
