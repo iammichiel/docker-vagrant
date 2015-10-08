@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Links the personnal folder with the shared folder
 rm -rf /home/vagrant/projects
@@ -23,7 +23,9 @@ apt-get update && apt-get install -y \
   curl \
   nodejs \
   npm \
-  python-dev
+  python-dev \
+  python-pip \
+  unzip
 
 # Nodejs does not create the node executable.
 update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
@@ -46,8 +48,14 @@ mv /tmp/docker-compose /usr/local/bin/docker-compose
 # Setting default shell to ZSH
 chsh -s /bin/zsh vagrant
 sudo -u vagrant sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-sed -i 's/robbyrussel/clean/g' /home/vagrant/.zshrc
+sed -i 's/fletcherm/clean/g' /home/vagrant/.zshrc
 echo "cd projects" >> /home/vagrant/.zshrc
+
+# Installing AWS tools.
+curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "/tmp/awscli-bundle.zip"
+unzip /tmp/awscli-bundle.zip
+/tmp/awscli-bundle/install -b /usr/local/bin/aws
+rm -rf /tmp/awscli-bundle.zip /tmp/awscli-bundle
 
 # Restarting services.
 service docker restart
