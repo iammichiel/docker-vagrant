@@ -33,29 +33,18 @@ update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
 # Installing composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Installing bower
-npm install -g bower grunt-cli
-
 # Install Docker
 curl -sSL https://get.docker.io/ubuntu/ | sudo sh
 usermod -a -G docker vagrant
 
 # Installing docker-composer
-curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-compose-`uname -s`-`uname -m` > /tmp/docker-compose
+curl -L https://github.com/docker/compose/releases/download/1.5.1/docker-compose-`uname -s`-`uname -m` > /tmp/docker-compose
 chmod +x /tmp/docker-compose
 mv /tmp/docker-compose /usr/local/bin/docker-compose
 
 # Setting default shell to ZSH
 chsh -s /bin/zsh vagrant
-sudo -u vagrant sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-sed -i 's/fletcherm/clean/g' /home/vagrant/.zshrc
 echo "cd projects" >> /home/vagrant/.zshrc
-
-# Installing AWS tools.
-curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "/tmp/awscli-bundle.zip"
-unzip /tmp/awscli-bundle.zip
-/tmp/awscli-bundle/install -b /usr/local/bin/aws
-rm -rf /tmp/awscli-bundle.zip /tmp/awscli-bundle
 
 # Restarting services.
 service docker restart
