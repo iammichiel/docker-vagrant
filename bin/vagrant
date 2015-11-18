@@ -34,7 +34,7 @@ update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install Docker
-curl -sSL https://get.docker.io/ubuntu/ | sudo sh
+curl -sSL https://get.docker.com | sudo sh
 usermod -a -G docker vagrant
 
 # Installing docker-composer
