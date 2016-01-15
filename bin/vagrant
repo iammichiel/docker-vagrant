@@ -12,6 +12,7 @@ apt-get update && apt-get install -y \
   php5-cli \
   php5-curl \
   vim \
+  wget \
   git \
   htop \
   linux-image-extra-virtual \
@@ -34,16 +35,18 @@ update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install Docker
-curl -sSL https://get.docker.com | sudo sh
+wget -qO- https://get.docker.com/ | sh
 usermod -a -G docker vagrant
 
 # Installing docker-composer
-curl -L https://github.com/docker/compose/releases/download/1.5.1/docker-compose-`uname -s`-`uname -m` > /tmp/docker-compose
+curl -L https://github.com/docker/compose/releases/download/1.5.2/docker-compose-`uname -s`-`uname -m` > /tmp/docker-compose
 chmod +x /tmp/docker-compose
 mv /tmp/docker-compose /usr/local/bin/docker-compose
 
 # Setting default shell to ZSH
 chsh -s /bin/zsh vagrant
+sudo -u vagrant -H sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sed -i 's/fletcherm/clean/g' /home/vagrant/.zshrc
 echo "cd projects" >> /home/vagrant/.zshrc
 
 # Restarting services.

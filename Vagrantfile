@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.network "private_network", ip: "192.168.5.10"
 
     # Shared folder
-    config.vm.synced_folder "apps", "/data", :nfs => true
+    config.vm.synced_folder "apps", "/data", type: "nfs", mount_options: ['actimeo=1']
     config.vm.synced_folder ".", "/vagrant", disabled: true
 
     # Hardware settings
