@@ -7,47 +7,28 @@ ln -fs /data /home/vagrant/projects
 # Update the system
 locale-gen fr_FR.UTF-8
 
-# Install the mose used dev packages
-apt-get update && apt-get install -y \
-  php5-cli \
-  php5-curl \
-  vim \
-  wget \
-  git \
-  htop \
-  linux-image-extra-virtual \
-  linux-headers-generic \
-  linux-headers-virtual \
-  linux-image-virtual \
-  mysql-client \
-  zsh \
-  curl \
-  nodejs \
-  npm \
-  python-dev \
-  python-pip \
-  unzip
+# Update and pre-requisites
+sudo apt-get install -y --no-install-recommends \
+    linux-image-extra-$(uname -r) \
+    linux-image-extra-virtual \
+    curl
 
-# Nodejs does not create the node executable.
-update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
-
-# Installing composer
-curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Setting up docker repo
+curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add -
+add-apt-repository \
+       "deb https://apt.dockerproject.org/repo/ \
+       ubuntu-$(lsb_release -cs) \
+       main"
 
 # Install Docker
-wget -qO- https://get.docker.com/ | sh
-usermod -a -G docker vagrant
+apt-get update && apt-get install -y docker-engine
+curl -L "https://github.com/docker/compose/releases/download/1.10.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod a+x /usr/local/bin/docker-compose
 
-# Installing docker-composer
-curl -L https://github.com/docker/compose/releases/download/1.7.0/docker-compose-`uname -s`-`uname -m` > /tmp/docker-compose
-chmod +x /tmp/docker-compose
-mv /tmp/docker-compose /usr/local/bin/docker-compose
-
-# Setting default shell to ZSH
-chsh -s /bin/zsh vagrant
-sudo -u vagrant -H sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-sed -i 's/fletcherm/clean/g' /home/vagrant/.zshrc
-echo "cd projects" >> /home/vagrant/.zshrc
+# Post install options
+groupadd docker
+usermod -a -G docker ubuntu
 
 # Restarting services.
+systemctl enable docker
 service docker restart
